@@ -1,4 +1,4 @@
-package Calculator;
+package Calculator.JCalculator;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
