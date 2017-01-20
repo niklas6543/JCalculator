@@ -385,12 +385,20 @@ public class Framecalc extends JFrame {
 		funcBlock.add(btnDel, gbc_btnDel);
 		btnDel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (formula.length() != 0){
-					formula = formula.substring(0, formula.length()-1);
+				if (currentInput == eqInput){
+					if (formula.length() != 0){
+						formula = formula.substring(0, formula.length()-1);
+					}
+					eqInput.setText(formula);
+					paint = false;
+				}else
+				{
+					if (formula.length() != 0){
+						var = var.substring(0, var.length()-1);
+					}
+					varInput.setText(var);
 				}
-				eqInput.setText(formula);
 				lblOperation.setText("");
-				paint = false;
 			}
 		});
 		
@@ -424,7 +432,7 @@ public class Framecalc extends JFrame {
 				}catch(NumberFormatException e)	
 				{
 					if (var.length() == 0){
-						lblOperation.setText("!!! error: variable is empty !!!");
+						lblOperation.setText("!!! warning: variable is empty !!!");
 					}else
 					{
 						lblOperation.setText("!!! error: wrong entry !!!");
@@ -481,6 +489,7 @@ public class Framecalc extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				sin = true;
 				cos = false;
+				paint = false;
 				canvas.repaint();
 			}
 		});
@@ -497,6 +506,7 @@ public class Framecalc extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				cos = true;
 				sin = false;
+				paint = false;
 				canvas.repaint();
 			}
 		});
@@ -521,6 +531,7 @@ public class Framecalc extends JFrame {
 		gbc_spinMinX.gridy = 6;
 		comBlock.add(spinMinX, gbc_spinMinX);
 		final JSpinner spinMaxX = new JSpinner(model2);
+		spinMaxX.setEnabled(false);
 		spinMaxX.addChangeListener(new ChangeListener(){
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -565,18 +576,7 @@ public class Framecalc extends JFrame {
 		      }
 		});
 	}
-//	
-//	public String buildF(JButton button, String currentFormula){
-//		//sammel Eingabe und baue Formel als String zusammen
-//	
-//		currentFormula += button.getText();
-//		//		eqInput.setText("");
-//		//		eqInput.setText(currentFormula);
-//		currentInput.setText("");
-//		currentInput.setText(currentFormula);
-//	
-//		return button.getText();
-//	}
+
 	public void getInput(JButton button){
 		//sammel Eingabe und baue Formel als String zusammen
 	
